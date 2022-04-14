@@ -21,11 +21,25 @@
     └── transforms.py
 ```
 
-Latte packages some basic modules, like **tensor** defines the basic data structure, **nn** together with functional provides necessary classes and functions for neural network, **optim** includes some classical optimization methods, and **utils.data** is for dataset and data loader. All the interfaces are referred to the official documentation of PyTorch.
+Latte packages some basic modules, like **tensor** defines the basic data structure, **nn** together with **functional** provides necessary classes and functions for neural network, **optim** includes some classical optimization methods, and **utils.data** is for dataset and data loader. All the interfaces are referred to the official documentation of PyTorch.
 
 Furthermore, what torchvision is to torch, lattevision is to latte. It includes some requisite modules for computer vision tasks. To be more specific, **transforms** contains some transformation functions for image processing, **datasets** implements the downloading and loading of MNIST dataset for now.
 
 All the features above are implemented using **numpy** package.
+
+## TODO
+
+- [x] Model save & load with `.npy` 
+
+  `latte.save(model.parameters(), to_file)` / `model.load(from_file)` 
+
+  Ps. `model.state_dict()` is not implemented, seems `np.save()` only support saving `np.ndarray` 
+
+- [ ] Model train & eval, Sequential
+
+  `model.train()` / `model.eval()` / `nn.Sequential()` 
+
+- [ ] Conv2d & ConvTranspose2d
 
 ## Reference
 
