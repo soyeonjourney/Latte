@@ -71,7 +71,7 @@ class Adam(Optimizer):
     def step(self) -> None:
         self.t += 1
         lr_t = self.lr * np.sqrt(1 - self.beta2 ** self.t) / (1 - self.beta1 ** self.t)
-        eps = self.eps * self.t ** 0.5
+        # FIXME: find why "divided by zero" error occurs occasionally
         for param, m, v in zip(self.params, self.m, self.v):
             m = self.beta1 * m + (1 - self.beta1) * param.grad
             v = self.beta2 * v + (1 - self.beta2) * param.grad ** 2
@@ -79,11 +79,11 @@ class Adam(Optimizer):
             if not param.is_bias:
                 param.data = (
                     param.data
-                    - lr_t * m / (np.sqrt(v) + eps)
+                    - lr_t * m / (np.sqrt(v) + self.eps)
                     - self.weight_decay
                     * param.data
                     / np.linalg.norm(param.data, ord='fro')
                 )
             # Bias is not regularized
             else:
-                param.data = param.data - lr_t * m / (np.sqrt(v) + eps)
+                param.data = param.data - lr_t * m / (np.sqrt(v) + self.eps)
